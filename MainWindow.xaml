@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Label x:Name="label" Content="Hello World&#xD;&#xA;" HorizontalAlignment="Center" Margin="0,158,0,0" VerticalAlignment="Top" Height="85" Width="204"/>
-        <Button x:Name="button" Click="MyButton_Click" Content="Button" HorizontalAlignment="Left" Margin="354,285,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="placeNameLabel" Content="Hello World" HorizontalAlignment="Left" Margin="291,50,0,0" VerticalAlignment="Top" Height="32" Width="204"/>
+        <Label x:Name="temperatureLabel" Content="Label" HorizontalAlignment="Left" Margin="385,102,0,0" VerticalAlignment="Top" Height="24" Width="104"/>
+        <Label x:Name="otherInfoLabel" Content="Label" HorizontalAlignment="Center" Margin="0,143,0,0" VerticalAlignment="Top" Width="656" Height="237"/>
+        <Label x:Name="weatherCodeLabel" Content="Label" HorizontalAlignment="Left" Margin="266,102,0,0" VerticalAlignment="Top" Height="24" Width="104"/>
+        <Label x:Name="timeLabel" Content="Label" HorizontalAlignment="Left" Margin="721,13,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="searchBar" KeyDown="searchBar_KeyDown" HorizontalAlignment="Left" Margin="291,17,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
 
     </Grid>
 </Window>
