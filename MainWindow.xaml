@@ -1,18 +1,20 @@
 ﻿<Window x:Class="WpfApp1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
-        mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Label x:Name="placeNameLabel" Content="Hello World" HorizontalAlignment="Left" Margin="291,50,0,0" VerticalAlignment="Top" Height="32" Width="204"/>
-        <Label x:Name="temperatureLabel" Content="Label" HorizontalAlignment="Left" Margin="385,102,0,0" VerticalAlignment="Top" Height="24" Width="104"/>
-        <Label x:Name="otherInfoLabel" Content="Label" HorizontalAlignment="Center" Margin="0,143,0,0" VerticalAlignment="Top" Width="656" Height="237"/>
-        <Label x:Name="weatherCodeLabel" Content="Label" HorizontalAlignment="Left" Margin="266,102,0,0" VerticalAlignment="Top" Height="24" Width="104"/>
-        <Label x:Name="timeLabel" Content="Label" HorizontalAlignment="Left" Margin="721,13,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="searchBar" KeyDown="searchBar_KeyDown" HorizontalAlignment="Left" Margin="291,17,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
+        <Label Content="Place Name:" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="placeNameLabel" Content="Hello World" HorizontalAlignment="Left" Margin="100,20,0,0" VerticalAlignment="Top" Height="32" Width="204"/>
+        <Label Content="Temperature:" HorizontalAlignment="Left" Margin="20,60,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="temperatureLabel" Content="Label" HorizontalAlignment="Left" Margin="100,60,0,0" VerticalAlignment="Top" Height="24"/>
+        <Label Content="Weather Code:" HorizontalAlignment="Left" Margin="20,100,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="weatherCodeLabel" Content="Label" HorizontalAlignment="Left" Margin="100,100,0,0" VerticalAlignment="Top" Height="24"/>
+        <Label Content="Time:" HorizontalAlignment="Left" Margin="620,20,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="timeLabel" Content="Label" HorizontalAlignment="Left" Margin="660,20,0,0" VerticalAlignment="Top"/>
 
+        <ComboBox x:Name="searchBar" KeyDown="searchBar_KeyDown" PreviewKeyDown="searchBar_PreviewKeyDown" SelectionChanged="searchBar_SelectionChanged" HorizontalAlignment="Center" Margin="0,151,0,0" VerticalAlignment="Top" Width="760" IsTextSearchEnabled="False"
+                 Foreground="Black" IsEditable="True"/>
+        <Label Content="Other Info:" HorizontalAlignment="Left" Margin="20,220,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="otherInfoLabel" Content="Label" HorizontalAlignment="Left" Margin="20,260,0,0" VerticalAlignment="Top" Width="760" Height="150"/>
     </Grid>
 </Window>

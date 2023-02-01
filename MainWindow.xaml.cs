@@ -60,6 +60,7 @@ namespace WpfApp1
                 {99,"Thunderstorm with heavy hail" }
             };
             GetWeatherData(52.25f,-7.07f);
+            placeNameLabel.Content = "Waterford";
             
 
         }
@@ -67,14 +68,33 @@ namespace WpfApp1
         private void searchBar_KeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.Key == Key.Return)
+
+
+            if (e.Key != Key.Escape)
             {
-                // Call your method here
-                GetLocationData(searchBar.Text);
+                searchBar.IsDropDownOpen = true;
+                GetLocationData(searchBar.Text, e.Key == Key.Return);
+                
+               
             }
         }
 
-        private async void GetLocationData(string str)
+        private void searchBar_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                otherInfoLabel.Content = sender.ToString();
+            }
+        }
+
+        private void searchBar_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = (sender as ComboBox).SelectedIndex;
+            if(index >=0 && index< 10)
+            GetLocationData(searchBar.Text, true, index);
+        }
+
+        private async void GetLocationData(string str, bool performSearch, int resultIndex = 0)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -83,23 +103,40 @@ namespace WpfApp1
                 {
                     string json = await response.Content.ReadAsStringAsync();
                     dynamic data = JsonConvert.DeserializeObject(json);
-                    if(data.results == null)
-                    try
+                    if (data.results != null)
                     {
-                        placeNameLabel.Content = data.results[0].name + ", " + data.results[0].country;
-                        GetWeatherData((float) data.results[0].latitude, (float) data.results[0].longitude);
-                    }
-                    catch(Exception e)
-                    {
-                        MessageBox.Show(e.Message);
-                    }
+                        try
+                        {
+                            if (performSearch)
+                            {
+                                placeNameLabel.Content = data.results[resultIndex].name + ", " + data.results[resultIndex].country;
+                                GetWeatherData((float)data.results[resultIndex].latitude, (float)data.results[resultIndex].longitude);
+                            }
+                            else
+                            {
+                                searchBar.Items.Clear();
+                                foreach(var item in data.results)
+                                {
+                                    searchBar.Items.Add(item.name+", "+item.country);
 
+
+
+                                }
+
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(e.Message);
+                        }
+                    }
 
                 }
             }
         }
 
-        private async void GetWeatherData(float latitude, float longitude)
+        private async void GetWeatherData(float latitude, float longitude)  
+
         {
             using (HttpClient client = new HttpClient())
             {
