@@ -63,25 +63,7 @@ namespace WpfApp1
             GetWeatherData(52.25f,-7.07f);
             placeNameLabel.Content = "Waterford, Ireland";
 
-            for (int i = 0; i < 40; ++i)
-            {
-                StackPanel innerStackPanel = new StackPanel();
 
-
-                Image image = new Image();
-                image.Source = new BitmapImage(new Uri("images/sun.png", UriKind.Relative));
-                
-
-                Label label = new Label();
-                label.Content = "Sunny " + i;
-
-                innerStackPanel.Children.Add(image);
-                innerStackPanel.Children.Add(label);
-
-                stackPanel.Children.Add(innerStackPanel);
-                otherInfoLabel.Content = Directory.GetCurrentDirectory();
-
-            }
 
 
 
@@ -174,6 +156,28 @@ namespace WpfApp1
                     temperatureLabel.Content = data.hourly.temperature_2m[timeAsHours] + " " + data.hourly_units.temperature_2m;
                     int weatherCode = data.hourly.weathercode[timeAsHours];
                     weatherCodeLabel.Content = weatherCodes[weatherCode];
+                        
+                        for (int i = 0; i < data.hourly.temperature_2m.Count; ++i)
+                        {
+                            StackPanel innerStackPanel = new StackPanel();
+
+
+                            Image image = new Image();
+                            image.Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\sun.png", UriKind.RelativeOrAbsolute));
+
+
+                            Label label = new Label();
+                            string time = data.hourly.time[i];
+                            time = time.Substring(time.Length - 5);
+                            label.Content = time + "\n" + data.hourly.temperature_2m[i] + data.hourly_units.temperature_2m;
+
+                            innerStackPanel.Children.Add(image);
+                            innerStackPanel.Children.Add(label);
+
+                            stackPanel.Children.Add(innerStackPanel);
+                            otherInfoLabel.Content = Directory.GetCurrentDirectory();
+
+                        }
                     }
                     catch (Exception e)
                     {
