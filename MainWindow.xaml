@@ -17,11 +17,12 @@
                  Foreground="Black" IsEditable="True"/>
         <Label Content="Other Info:" HorizontalAlignment="Left" Margin="20,449,0,0" VerticalAlignment="Top"/>
         <Label x:Name="otherInfoLabel" Content="Label" HorizontalAlignment="Center" Margin="0,492,0,0" VerticalAlignment="Top" Width="760" Height="82"/>
-        <ScrollViewer x:Name="scrollViewer" HorizontalScrollBarVisibility="Auto" Margin="20,211,20,165">
+        <ScrollViewer x:Name="scrollViewer" HorizontalScrollBarVisibility="Auto" Margin="20,211,20,211">
             <StackPanel x:Name="stackPanel" Orientation="Horizontal">
-                
+
             </StackPanel>
         </ScrollViewer>
+        <Label Content="Hourly Weather" HorizontalAlignment="Center" Margin="0,178,0,0" VerticalAlignment="Top" Width="auto"/>
 
 
 

@@ -28,6 +28,7 @@ namespace WpfApp1
         private Dictionary<int, string> weatherCodes;
         private Dictionary<int, Image> weatherIcons;
 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -67,6 +68,9 @@ namespace WpfApp1
 
                 weatherIcons = new Dictionary<int, Image>()
             {
+            {-3, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\10.png",UriKind.RelativeOrAbsolute))} },
+            {-2, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\10.png",UriKind.RelativeOrAbsolute))} },
+            {-1, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\4.png",UriKind.RelativeOrAbsolute))} },
             {0, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\20.png",UriKind.RelativeOrAbsolute))} },
             {1, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\1.png",UriKind.RelativeOrAbsolute))} },
             {2, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\3.png",UriKind.RelativeOrAbsolute))} },
@@ -180,7 +184,8 @@ namespace WpfApp1
         {
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync("https://api.open-meteo.com/v1/forecast?latitude="+latitude+"&longitude="+longitude+"&hourly=temperature_2m,relativehumidity_2m,dewpoint_2m,apparent_temperature,precipitation,weathercode,surface_pressure,visibility,windspeed_10m&current_weather=true");
+                HttpResponseMessage response = await client.GetAsync("https://api.open-meteo.com/v1/forecast?latitude="+latitude+"&longitude="+longitude+ "&hourly=temperature_2m,relativehumidity_2m" +
+                    ",dewpoint_2m,apparent_temperature,precipitation,weathercode,surface_pressure,visibility,windspeed_10m&daily=weathercode,sunrise,sunset&timezone=auto&current_weather=true");
                 if (response.IsSuccessStatusCode)
                 {
                     string json = await response.Content.ReadAsStringAsync();
@@ -188,8 +193,8 @@ namespace WpfApp1
                     int timeAsHours = DateTime.Now.TimeOfDay.Hours;
                     try { 
                     
-                    temperatureLabel.Content = data.hourly.temperature_2m[timeAsHours] + " " + data.hourly_units.temperature_2m;
-                    int weatherCode = data.hourly.weathercode[timeAsHours];
+                    temperatureLabel.Content = data.current_weather.temperature + " " + data.hourly_units.temperature_2m;
+                        int weatherCode = data.current_weather.weathercode;
                         
                     weatherCodeLabel.Content = weatherCodes[weatherCode];
                         stackPanel.Children.Clear();
@@ -199,13 +204,26 @@ namespace WpfApp1
                             StackPanel innerStackPanel = new StackPanel();
 
 
-
-
+                            
+                            
                             Image image = new Image();
-                            image.Source = weatherIcons[(int)data.hourly.weathercode[i]].Source;
+                            int index = (int)data.hourly.weathercode[i];
+                            string sunset = data.daily.sunset[0], sunrise = data.daily.sunrise[0];
+                            sunset = sunset.Substring(sunset.Length - 5, 2);
+                            sunrise = sunrise.Substring(sunrise.Length - 5, 2);
+                            int sunriseTime = int.Parse(sunrise), sunsetTime = int.Parse(sunset);
+
+                            if ((index >= 0 && index <= 2) && (i%24 > sunsetTime || i%24 < sunriseTime))
+                            {
+                                image.Source = weatherIcons[-1 * (index + 1)].Source;
+                            }else
+                            {
+                                image.Source = weatherIcons[index].Source;
+                            }
+
                             Label label = new Label();
                             string time = data.hourly.time[i];
-                            time = time[^5..];
+                            time = time.Substring(time.Length - 5);
                             label.Content = time + "\n" + data.hourly.temperature_2m[i] + data.hourly_units.temperature_2m;
                             
                             innerStackPanel.Children.Add(image);
@@ -213,7 +231,6 @@ namespace WpfApp1
                             image.Margin = new Thickness(5, 5, 5, 10);
                             if(i == timeAsHours)
                             {
-                                otherInfoLabel.Content = timeAsHours;
                                 innerStackPanel.Background = new SolidColorBrush(Colors.LightBlue);
                             }
 
