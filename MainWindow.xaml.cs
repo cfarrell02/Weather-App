@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace WpfApp1
 {
@@ -60,8 +61,29 @@ namespace WpfApp1
                 {99,"Thunderstorm with heavy hail" }
             };
             GetWeatherData(52.25f,-7.07f);
-            placeNameLabel.Content = "Waterford";
-            
+            placeNameLabel.Content = "Waterford, Ireland";
+
+            for (int i = 0; i < 40; ++i)
+            {
+                StackPanel innerStackPanel = new StackPanel();
+
+
+                Image image = new Image();
+                image.Source = new BitmapImage(new Uri("images/sun.png", UriKind.Relative));
+                
+
+                Label label = new Label();
+                label.Content = "Sunny " + i;
+
+                innerStackPanel.Children.Add(image);
+                innerStackPanel.Children.Add(label);
+
+                stackPanel.Children.Add(innerStackPanel);
+                otherInfoLabel.Content = Directory.GetCurrentDirectory();
+
+            }
+
+
 
         }
 
@@ -89,9 +111,9 @@ namespace WpfApp1
 
         private void searchBar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int index = (sender as ComboBox).SelectedIndex;
-            if(index >=0 && index< 10)
-            GetLocationData(searchBar.Text, true, index);
+
+                GetLocationData(searchBar.Text, true);
+            
         }
 
         private async void GetLocationData(string str, bool performSearch, int resultIndex = 0)
@@ -109,6 +131,7 @@ namespace WpfApp1
                         {
                             if (performSearch)
                             {
+                             
                                 placeNameLabel.Content = data.results[resultIndex].name + ", " + data.results[resultIndex].country;
                                 GetWeatherData((float)data.results[resultIndex].latitude, (float)data.results[resultIndex].longitude);
                             }
