@@ -25,7 +25,8 @@ namespace WpfApp1
     //
     public partial class MainWindow : Window
     {
-        private Dictionary<int,string> weatherCodes, iconCodes;
+        private Dictionary<int, string> weatherCodes;
+        private Dictionary<int, Image> weatherIcons;
 
         public MainWindow()
         {
@@ -63,37 +64,40 @@ namespace WpfApp1
                 {96,"Thunderstorm with slight hail" },
                 {99,"Thunderstorm with heavy hail" }
             };
-            iconCodes = new Dictionary<int, string>()
+
+                weatherIcons = new Dictionary<int, Image>()
             {
-                {0, "20"},
-                {1, "1"},
-                {2, "3"},
-                {3, "2"},
-                {45, "8"},
-                {48, "8"},
-                {51, "12"},
-                {53, "15"},
-                {55, "17"},
-                {56, "12"},
-                {57, "17"},
-                {61, "14"},
-                {63, "13"},
-                {65, "6"},
-                {66, "14"},
-                {67, "6"},
-                {71, "17"},
-                {73, "16"},
-                {75, "18"},
-                {77, "19"},
-                {80, "14"},
-                {81, "13"},
-                {82, "6"},
-                {85, "17"},
-                {86, "73"},
-                {95, "9"},
-                {96,"5" },
-                {99,"5" }
+            {0, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\20.png",UriKind.RelativeOrAbsolute))} },
+            {1, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\1.png",UriKind.RelativeOrAbsolute))} },
+            {2, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\3.png",UriKind.RelativeOrAbsolute))} },
+            {3, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\2.png",UriKind.RelativeOrAbsolute))} },
+            {45, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\8.png",UriKind.RelativeOrAbsolute))} },
+            {48, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\8.png",UriKind.RelativeOrAbsolute))} },
+            {51, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\12.png",UriKind.RelativeOrAbsolute))} },
+            {53, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\15.png",UriKind.RelativeOrAbsolute))} },
+            {55, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\17.png",UriKind.RelativeOrAbsolute))} },
+            {56, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\12.png",UriKind.RelativeOrAbsolute))} },
+            {57, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\17.png",UriKind.RelativeOrAbsolute))} },
+            {61, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\14.png",UriKind.RelativeOrAbsolute))} },
+            {63, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\13.png",UriKind.RelativeOrAbsolute))} },
+            {65, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\6.png",UriKind.RelativeOrAbsolute))} },
+            {66, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\14.png",UriKind.RelativeOrAbsolute))} },
+            {67, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\6.png",UriKind.RelativeOrAbsolute)) } },
+            {71, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\17.png",UriKind.RelativeOrAbsolute))} },
+            {73, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\16.png",UriKind.RelativeOrAbsolute))} },
+            {75, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\18.png",UriKind.RelativeOrAbsolute))} },
+            {77, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\19.png",UriKind.RelativeOrAbsolute))} },
+            {80, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\14.png",UriKind.RelativeOrAbsolute))} },
+            {81, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\13.png",UriKind.RelativeOrAbsolute))} },
+            {82, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\6.png",UriKind.RelativeOrAbsolute))} },
+            {85, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\17.png",UriKind.RelativeOrAbsolute))} },
+            {86, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\18.png",UriKind.RelativeOrAbsolute))} },
+            {95, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\9.png",UriKind.RelativeOrAbsolute))} },
+            {96, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\5.png",UriKind.RelativeOrAbsolute))} },
+            {99, new Image(){ Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\5.png",UriKind.RelativeOrAbsolute))} }
             };
+
+
             GetWeatherData(52.25f,-7.07f);
             placeNameLabel.Content = "Waterford, Ireland";
 
@@ -188,19 +192,17 @@ namespace WpfApp1
                     int weatherCode = data.hourly.weathercode[timeAsHours];
                         
                     weatherCodeLabel.Content = weatherCodes[weatherCode];
+                        stackPanel.Children.Clear();
                         
-                        for (int i = 0; i < data.hourly.temperature_2m.Count; ++i)
+                        for (int i = timeAsHours -12; i < timeAsHours + 24; ++i)
                         {
                             StackPanel innerStackPanel = new StackPanel();
 
 
+
+
                             Image image = new Image();
-                            int index = data.hourly.weathercode[i];
-                            string iconIndex = iconCodes[index];
-                            
-                            image.Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\"+iconIndex+".png", UriKind.RelativeOrAbsolute));
-
-
+                            image.Source = weatherIcons[(int)data.hourly.weathercode[i]].Source;
                             Label label = new Label();
                             string time = data.hourly.time[i];
                             time = time[^5..];
@@ -209,12 +211,17 @@ namespace WpfApp1
                             innerStackPanel.Children.Add(image);
                             innerStackPanel.Children.Add(label);
                             image.Margin = new Thickness(5, 5, 5, 10);
+                            if(i == timeAsHours)
+                            {
+                                otherInfoLabel.Content = timeAsHours;
+                                innerStackPanel.Background = new SolidColorBrush(Colors.LightBlue);
+                            }
 
                             stackPanel.Children.Add(innerStackPanel);
 
                         }
-                        otherInfoLabel.Content = "WWW " + itemsList.Width;
-                        itemsList.ScrollToHorizontalOffset(itemsList.ExtentWidth);
+                        scrollViewer.ScrollToHorizontalOffset(stackPanel.ActualWidth * timeAsHours / 23);
+
                     }
                     catch (Exception e)
                     {
