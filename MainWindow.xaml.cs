@@ -21,14 +21,17 @@ namespace WpfApp1
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    //
     public partial class MainWindow : Window
     {
-        private Dictionary<int,string> weatherCodes;
+        private Dictionary<int,string> weatherCodes, iconCodes;
 
         public MainWindow()
         {
             InitializeComponent();
-            timeLabel.Content = DateTime.Now.TimeOfDay;
+            timeLabel.Content = DateTime.Now.TimeOfDay.ToString()[..5];
+
             weatherCodes = new Dictionary<int, string>()
             {
                 {0, "Clear sky"},
@@ -60,6 +63,37 @@ namespace WpfApp1
                 {96,"Thunderstorm with slight hail" },
                 {99,"Thunderstorm with heavy hail" }
             };
+            iconCodes = new Dictionary<int, string>()
+            {
+                {0, "20"},
+                {1, "1"},
+                {2, "3"},
+                {3, "2"},
+                {45, "8"},
+                {48, "8"},
+                {51, "12"},
+                {53, "15"},
+                {55, "17"},
+                {56, "12"},
+                {57, "17"},
+                {61, "14"},
+                {63, "13"},
+                {65, "6"},
+                {66, "14"},
+                {67, "6"},
+                {71, "17"},
+                {73, "16"},
+                {75, "18"},
+                {77, "19"},
+                {80, "14"},
+                {81, "13"},
+                {82, "6"},
+                {85, "17"},
+                {86, "73"},
+                {95, "9"},
+                {96,"5" },
+                {99,"5" }
+            };
             GetWeatherData(52.25f,-7.07f);
             placeNameLabel.Content = "Waterford, Ireland";
 
@@ -85,10 +119,7 @@ namespace WpfApp1
 
         private void searchBar_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return)
-            {
-                otherInfoLabel.Content = sender.ToString();
-            }
+
         }
 
         private void searchBar_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -155,6 +186,7 @@ namespace WpfApp1
                     
                     temperatureLabel.Content = data.hourly.temperature_2m[timeAsHours] + " " + data.hourly_units.temperature_2m;
                     int weatherCode = data.hourly.weathercode[timeAsHours];
+                        
                     weatherCodeLabel.Content = weatherCodes[weatherCode];
                         
                         for (int i = 0; i < data.hourly.temperature_2m.Count; ++i)
@@ -163,21 +195,26 @@ namespace WpfApp1
 
 
                             Image image = new Image();
-                            image.Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\sun.png", UriKind.RelativeOrAbsolute));
+                            int index = data.hourly.weathercode[i];
+                            string iconIndex = iconCodes[index];
+                            
+                            image.Source = new BitmapImage(new Uri("C:\\Users\\cianf\\source\\repos\\WpfApp1\\images\\"+iconIndex+".png", UriKind.RelativeOrAbsolute));
 
 
                             Label label = new Label();
                             string time = data.hourly.time[i];
-                            time = time.Substring(time.Length - 5);
+                            time = time[^5..];
                             label.Content = time + "\n" + data.hourly.temperature_2m[i] + data.hourly_units.temperature_2m;
-
+                            
                             innerStackPanel.Children.Add(image);
                             innerStackPanel.Children.Add(label);
+                            image.Margin = new Thickness(5, 5, 5, 10);
 
                             stackPanel.Children.Add(innerStackPanel);
-                            otherInfoLabel.Content = Directory.GetCurrentDirectory();
 
                         }
+                        otherInfoLabel.Content = "WWW " + itemsList.Width;
+                        itemsList.ScrollToHorizontalOffset(itemsList.ExtentWidth);
                     }
                     catch (Exception e)
                     {
