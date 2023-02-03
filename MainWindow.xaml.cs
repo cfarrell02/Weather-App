@@ -212,6 +212,7 @@ namespace WpfApp1
                             sunset = sunset.Substring(sunset.Length - 5, 2);
                             sunrise = sunrise.Substring(sunrise.Length - 5, 2);
                             int sunriseTime = int.Parse(sunrise), sunsetTime = int.Parse(sunset);
+                            
 
                             if ((index >= 0 && index <= 2) && (i%24 > sunsetTime || i%24 < sunriseTime))
                             {
